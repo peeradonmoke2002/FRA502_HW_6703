@@ -472,16 +472,23 @@ Best position in elite: [-0.9120712   1.05211149]
 ### Step 4: Find Sample Mean and Sample Variance
 In this step we calculate the sample mean and the sample (population) variance of the elite individuals to update the parameters of the sampling distribution.
 
-Mean (vector):
-$$\boldsymbol{\mu}_{k+1} \;=\; \frac{1}{M}\sum_{i=1}^{M} x_i^{\text{elite}} $$
+**Mean (vector):**
 
-Variance (per-dimension, population variance as used in code):
-$$\boldsymbol{\sigma}^2_{k+1} \;=\; \frac{1}{M}\sum_{i=1}^{M} \big(x_i^{\text{elite}} - \boldsymbol{\mu}_{k+1}\big)^2 $$
+$$
+\boldsymbol{\mu}_{k+1} = \frac{1}{M}\sum_{i=1}^{M} x_i^{\text{elite}}
+$$
 
-Notes:
+**Variance (per-dimension, population variance):**
+
+$$
+\boldsymbol{\sigma}^2_{k+1} = \frac{1}{M}\sum_{i=1}^{M} \left(x_i^{\text{elite}} - \boldsymbol{\mu}_{k+1}\right)^2
+$$
+
+**Implementation notes:**
+
 In code these are computed as:
-- `mu_k1 = np.mean(elite_population, axis=0)` (Sample mean)
-- `sigma2_k1 = np.var(elite_population, axis=0)`  (Population variance)
+- `mu_k1 = np.mean(elite_population, axis=0)` — Sample mean
+- `sigma2_k1 = np.var(elite_population, axis=0)` — Population variance
 
 ```python
 # First init paramters
