@@ -1,5 +1,17 @@
 # FRA502_HW_6703
-This repository contains the homework assignments of optimization for the FRA502 course
+This repository contains the homework assignments of optimization for the FRA502 course.
+
+## Requirements
+
+Install the Python dependencies before running the notebook:
+
+```bash
+pip install numpy matplotlib scipy
+```
+
+> **Note**
+> The Cross-Entropy Method (CEM) implementation relies on `scipy.stats.multivariate_normal`.
+> Make sure SciPy is installed to avoid import errors when executing the notebook.
 
 ## Table of Contents
 - [Objective](#objective)
@@ -40,7 +52,7 @@ where:
 The range of interest for x is set between -2 and 2 for each dimension with N = 80 grid points.
 
 
-By in this howmework, we will implement optimization algorithms to find the global minimum of the Rastrigin function as a **objective function or cost function**.
+In this homework, we implement optimization algorithms to find the global minimum of the Rastrigin function as the **objective function or cost function**.
 
 
 ## Optimization Algorithms
@@ -72,7 +84,7 @@ $\Delta\boldsymbol{x} = -\Big(\frac{\partial f}{\partial\boldsymbol{x}}\Big|_{\b
 ### Gradient and Hessian Calculation
 To implement Newton's Method, we need to calculate the gradient and Hessian matrix of the Rastrigin function.
 
-Base from objective function of restrigin function:
+Based on the objective function of the Rastrigin function:
 $$f(x) = 10d + \sum_{i=1}^{d} (x_i^2 - 10\cos(2\pi x_i))$$
 We need to find the gradient and hessian matrix of the function.
 
@@ -743,8 +755,8 @@ Iter  11 | f_best =   0.000314 | μ = [ 0.0001, -0.0014] | σ² = [1.05e-05 6.11
 
 ### CEM Summary
 
-Base from results now try to plot the convergence graph: 
+Based on the results, we can plot the convergence graph:
 
 ![output8](images/output8.png)
 
-Base from results The CEM successfully found the global minimum of the Rastrigin function in just 10 iterations. Starting from a random point with fitness ~3.0 and distance ~2.3 from the origin, it converged exponentially to fitness ~0.001 (near the global optimum of 0.0) at distance ~0.05 from [0,0]. The left graph shows exponential fitness decay (log-scale linear decrease), while the right graph shows the mean μ moving steadily toward the global minimum. Minor oscillations at iterations 3-8 are normal stochastic behavior. Bottom line: CEM succeeded where gradient-based methods (like Newton) failed—it found the global minimum instead of getting stuck at local minima (~f=5).
+From the results, the CEM successfully found the global minimum of the Rastrigin function in just 10 iterations. Starting from a random point with fitness ~3.0 and distance ~2.3 from the origin, it converged exponentially to fitness ~0.001 (near the global optimum of 0.0) at distance ~0.05 from [0, 0]. The left graph shows exponential fitness decay (log-scale linear decrease), while the right graph shows the mean μ moving steadily toward the global minimum. Minor oscillations at iterations 3-8 are normal stochastic behavior. Bottom line: CEM succeeded where gradient-based methods (like Newton) failed—it found the global minimum instead of getting stuck at local minima (~f=5).
