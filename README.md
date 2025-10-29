@@ -250,13 +250,19 @@ Based on the results after adding damping to the Hessian matrix with beta = 100.
 ### Add Line Search with Armijo Backtracking
 To further improve the convergence of Newton's Method, we can add a line search with Armijo backtracking. This helps to ensure that each step taken by the algorithm results in a sufficient decrease in the objective function.
 
-Initialize $\alpha = 1$
+**Algorithm:**
 
-While $f(\boldsymbol{x}_k + \alpha\Delta\boldsymbol{x}) > f(\boldsymbol{x}_k) + b\alpha\nabla_{\boldsymbol{x}}f(\boldsymbol{x}_k)^{\top}\Delta\boldsymbol{x}$:
+1. Initialize: $\alpha = 1$
 
+2. While the following condition holds:
+
+$$f(\boldsymbol{x}_k + \alpha\Delta\boldsymbol{x}) > f(\boldsymbol{x}_k) + b\alpha\nabla_{\boldsymbol{x}}f(\boldsymbol{x}_k)^{\top}\Delta\boldsymbol{x}$$
+
+   Reduce step size:
+   
 $$\alpha \leftarrow c\alpha$$
 
-Update:
+3. Update position:
 
 $$\boldsymbol{x}_{k+1} = \boldsymbol{x}_k + \alpha\Delta\boldsymbol{x}$$
 
