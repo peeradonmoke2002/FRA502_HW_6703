@@ -374,7 +374,14 @@ Where:
 
 The diagonal covariance matrix $\Sigma$ has the form:
 
-$$\Sigma = \begin{bmatrix} \sigma_1^2 & 0 & \cdots & 0 \\ 0 & \sigma_2^2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_d^2 \end{bmatrix}$$
+$$
+\Sigma = \begin{pmatrix} 
+\sigma_1^2 & 0 & \cdots & 0 \\\\ 
+0 & \sigma_2^2 & \cdots & 0 \\\\ 
+\vdots & \vdots & \ddots & \vdots \\\\ 
+0 & 0 & \cdots & \sigma_d^2 
+\end{pmatrix}
+$$
 
 **Note:** Using a diagonal covariance assumes independence between dimensions (appropriate for the Rastrigin function).
 
