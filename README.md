@@ -341,6 +341,7 @@ The Cross-Entropy Method (CEM) is a stochastic optimization algorithm that uses 
 Here is step how CEM works:
 
 First is What is Multivariate Gaussian Distribution
+
 $$\mathcal N(x;\mu,\Sigma)
 = \frac{1}{(2\pi)^{d/2}\,|\Sigma|^{1/2}}
 \exp\!\left(-\tfrac12 (x-\mu)^{\top}\Sigma^{-1}(x-\mu)\right)$$
