@@ -40,16 +40,16 @@ where:
 The range of interest for x is set between -2 and 2 for each dimension with N = 80 grid points.
 
 
-By in this howmework, we will implement optimization algorithms to find the global minimum of the Rastrigin function as a **objective function or cost function**.
+In this homework we implement optimization algorithms to find the global minimum of the Rastrigin function, treating it as an **objective (cost) function**.
 
 
 ## Optimization Algorithms
 In this homework, we will implement the following optimization algorithms:
-1. Newton's Method **(cannont find global minima alone)**
-- Gradient Descent and Hessian Matrix calculation
-- Add damping factor to Hessian Matrix
-- Add Line Search with Armijo backtracking
-2. Cross-Entropy Method (CEM) **(can find global minima)**
+1. Newton's Method **(cannot find the global minimum by itself)**
+   - Gradient and Hessian calculation
+   - Damping the Hessian
+   - Line search with Armijo backtracking
+2. Cross-Entropy Method (CEM) **(can reach the global minimum)**
 
 
 ## Newton's Method
@@ -72,15 +72,15 @@ $\Delta\boldsymbol{x} = -\Big(\frac{\partial f}{\partial\boldsymbol{x}}\Big|_{\b
 ### Gradient and Hessian Calculation
 To implement Newton's Method, we need to calculate the gradient and Hessian matrix of the Rastrigin function.
 
-Base from objective function of restrigin function:
+Based on the objective function of the Rastrigin function:
 $$f(x) = 10d + \sum_{i=1}^{d} (x_i^2 - 10\cos(2\pi x_i))$$
-We need to find the gradient and hessian matrix of the function.
+we need to find the gradient and Hessian matrix of the function.
 
 **Gradient**
-The gradient of the function is given by:
+For $A = 10$ the gradient of the function is:
 $$\nabla f(x) = 2x + 20\pi \sin(2\pi x)$$
 **Hessian Matrix**
-The Hessian matrix of the function is given by:
+The Hessian matrix of the function is:
 $$H(x) = diag(2 + 40\pi^2 \cos(2\pi x_i))$$
 where $diag$ denotes a diagonal matrix with the specified elements on the diagonal.
 
@@ -173,8 +173,8 @@ step 20 | x = [ 0.99495864 -0.50254604] -> f = 21.246232
 
 ![output1](images/output1.png)
 
-As you can see in this case I have set init point at `x0 = np.array([[1., 0.7]]).T
-` or (1.0, 0.7) and I have implement newton's method to optimize the function. After 20 iterations, this can see around step 2-3 that result is around 20-21 whcih mean at this point we found a local maximum or mean the hessian is not Positive definite and the optimization is not converging to the global minimum at (0,0) with f(0,0)=0.
+With the initial point `x0 = np.array([[1., 0.7]]).T
+` the plain Newton update quickly jumps to large objective values and then stagnates around `f ≈ 21`. The Hessian of the Rastrigin function is indefinite in that region, so the method behaves erratically and fails to make progress toward the global minimum at `(0, 0)` where `f(0,0) = 0`.
 
 ### Add Damping Factor to Hessian Matrix
 To improve the convergence of Newton's Method, we can add a damping factor to the Hessian matrix. This helps to ensure that the Hessian is positive definite, which is necessary for convergence.
@@ -245,7 +245,7 @@ step 20 | x = [0.99495864 1.98991223] -> f = 4.974790
 ```
 ![output2](images/output2.png)
 
-Based on the results after adding damping to the Hessian matrix with beta = 100.0 for the around step 1-2, we can see that f is decreasing from around 22 to 10. After that, around step 2-3, it overshoots from 10.169 to 10.316. This makes the results move to another basin and then try to converge with f around 4.974790, which is still a local minimum, not the global minimum.
+With damping (`beta = 100`) the Hessian is forced to be positive definite, so the iterates stop exploding. They still drift into a neighboring basin, though, and settle at a local minimum with `f ≈ 4.97`, far above the global optimum.
 
 ### Add Line Search with Armijo Backtracking
 To further improve the convergence of Newton's Method, we can add a line search with Armijo backtracking. This helps to ensure that each step taken by the algorithm results in a sufficient decrease in the objective function.
@@ -298,7 +298,7 @@ iterations = 20
 px, py = [x[0,0]], [x[1,0]]  # to draw a path
 
 for it in range(1, iterations + 1):
-    x = armijo_newton_step(x)             # on e Newton step (no damping/Armijo)
+    x = armijo_newton_step(x)             # one Newton step (no damping/Armijo)
     fx = float(f(x))        # your scalar objective
     print(f"step {it:2d} | x = {x.ravel()} -> f = {fx:.6f}")
 ```
@@ -328,7 +328,7 @@ step 20 | x = [0.99495864 0.99495864] -> f = 1.989918
 ```
 ![output3](images/output3.png)
 
-Based on the results after adding Armijo backtracking line search, we can see that the optimization process is more robust and converges more reliably to the minimum. However the results is still stuck at local minimum not the global minimum due to this function having many local minima.
+Armijo backtracking makes the update more stable and the objective decreases smoothly, but the iterates still settle at a local minimum because the function is highly multimodal.
 
 
 ### Newton's Method Summary
@@ -346,9 +346,9 @@ Based on the results after adding Armijo backtracking line search, we can see th
 ## Cross-Entropy Method (CEM)
 The Cross-Entropy Method (CEM) is a stochastic optimization algorithm that uses a population-based approach to find the minimum of an objective function. The algorithm works by iteratively sampling a population of candidate solutions from a probability distribution, evaluating their fitness, and updating the distribution based on the best-performing candidates.
 
-Here is step how CEM works:
+Here is how CEM works step by step:
 
-First is What is Multivariate Gaussian Distribution
+First, recall the multivariate Gaussian distribution:
 
 $$\mathcal N(x;\mu,\Sigma)
 = \frac{1}{(2\pi)^{d/2}\,|\Sigma|^{1/2}}
@@ -385,9 +385,9 @@ $$
 
 **Note:** Using a diagonal covariance assumes independence between dimensions (appropriate for the Rastrigin function).
 
-And then generate a population of size $N,\mathcal{P} = \{x_1, x_2, \ldots, x_N\}$ by sampling from the distribution. where $x_i \sim \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$
+And then generate a population of size $N,\mathcal{P} = \{x_1, x_2, \ldots, x_N\}$ by sampling from the distribution, where $x_i \sim \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$.
 
-base from below code
+The code below illustrates this step:
 - `n_dim`: number of dimensions
 - `N`: population size
 - `mu_k`: initial mean vector (randomly initialized within bounds)
@@ -412,7 +412,7 @@ population = distribution.rvs(size=N)
 ![output4](images/output4.png)
 
 ### Step 2: Evaluate each individual in the population
-base from 
+Based on 
 $$\boldsymbol{f} = [f(x_1), f(x_2), \ldots, f(x_N)]^T$$
 
 where $F(x_i)$ is the fitness of individual $x_i$ in the population.
@@ -440,7 +440,7 @@ Best position: [-0.96665929  0.96276917]
 
 
 ### Step 3: Select the best M < N individuals
-In this step select the best M < N individuals based on their fitness values. 
+In this step we select the best $M < N$ individuals based on their fitness values. 
 $$\mathcal{P}_{\text{elite}} = \{x^{(i)} \mid i \in \text{top-}M\text{ indices of } \boldsymbol{f}\}$$
 
 where $x_i^{elite}$ is the i-th best individual in the population.
@@ -464,8 +464,8 @@ And here Result:
 
 ```
 Elite size: 10
-Best fitness in elite: 3.957787 at index 35
-Best position in elite: [-0.9120712   1.05211149]
+Best fitness in elite: 2.352342 at index 58
+Best position in elite: [-0.96665929  0.96276917]
 ```
 
 
@@ -741,10 +741,12 @@ Iter  11 | f_best =   0.000314 | μ = [ 0.0001, -0.0014] | σ² = [1.05e-05 6.11
 
 ![output7](images/output7.png)
 
+Note that the implementation reports the current mean $μ$ as `x*`; the elite individual that achieved the printed best fitness is stored separately in the run history.
+
 ### CEM Summary
 
-Base from results now try to plot the convergence graph: 
+Based on the results we can plot the convergence graph: 
 
 ![output8](images/output8.png)
 
-Base from results The CEM successfully found the global minimum of the Rastrigin function in just 10 iterations. Starting from a random point with fitness ~3.0 and distance ~2.3 from the origin, it converged exponentially to fitness ~0.001 (near the global optimum of 0.0) at distance ~0.05 from [0,0]. The left graph shows exponential fitness decay (log-scale linear decrease), while the right graph shows the mean μ moving steadily toward the global minimum. Minor oscillations at iterations 3-8 are normal stochastic behavior. Bottom line: CEM succeeded where gradient-based methods (like Newton) failed—it found the global minimum instead of getting stuck at local minima (~f=5).
+From these runs CEM reached a point very close to the global minimum within 11 iterations. The elite fitness dropped from roughly `4.16` with the mean `μ` about `1.6` units away from the origin to a best fitness of `3.1e-4` with `‖μ‖ ≈ 1.4e-3`. The left panel shows a near-linear decrease of the best fitness on the log scale, while the right panel tracks the mean marching toward `(0, 0)` with small stochastic oscillations. In short, CEM avoided the local minima that trapped the Newton variants and navigated to the basin containing the global optimum.
