@@ -370,8 +370,11 @@ $$\mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$$
 Where:
 - $\boldsymbol{\mu} \in \mathbb{R}^d$ is the mean vector (center of search)
 - $\boldsymbol{\sigma}^2 = [\sigma_1^2, \sigma_2^2, \ldots, \sigma_d^2]$ is the variance vector
-- $\text{diag}(\boldsymbol{\sigma}^2)$ is the diagonal covariance matrix:
-  $$\Sigma = \begin{bmatrix} \sigma_1^2 & 0 & \cdots & 0 \\ 0 & \sigma_2^2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_d^2 \end{bmatrix}$$
+- $\text{diag}(\boldsymbol{\sigma}^2)$ is the diagonal covariance matrix
+
+The diagonal covariance matrix $\Sigma$ has the form:
+
+$$\Sigma = \begin{bmatrix} \sigma_1^2 & 0 & \cdots & 0 \\ 0 & \sigma_2^2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_d^2 \end{bmatrix}$$
 
 **Note:** Using a diagonal covariance assumes independence between dimensions (appropriate for the Rastrigin function).
 
