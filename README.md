@@ -252,7 +252,7 @@ To further improve the convergence of Newton's Method, we can add a line search 
 
 $\alpha = 1$
 
-while $f(\boldsymbol{x}_k + \alpha\Delta\boldsymbol{x}) > f(\boldsymbol{x}_k) + b\alpha\nabla_{\boldsymbol{x}}f(\boldsymbol{x}_k)^T\Delta\boldsymbol{x}$:
+while $f(\boldsymbol{x}_k + \alpha\Delta\boldsymbol{x}) > f(\boldsymbol{x}_k) + b\alpha\nabla_{\boldsymbol{x}}f(\boldsymbol{x}_k)^{\top}\Delta\boldsymbol{x}$:
 
 $\quad\alpha = c\alpha$
 
