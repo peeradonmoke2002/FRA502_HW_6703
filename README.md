@@ -1,4 +1,4 @@
-# FRA502_HW_6703
+# FRA502_HW_6703_6702_6810
 This repository contains the homework assignments of optimization for the FRA502 course
 
 ## Table of Contents
