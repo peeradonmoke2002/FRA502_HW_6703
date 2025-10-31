@@ -18,6 +18,7 @@ This repository contains the homework assignments of optimization for the FRA502
     - [Step 5: Update the Sampling Distribution](#step-5-update-the-sampling-distribution)
     - [Full Implementation](#full-implementation)
     - [CEM Summary](#cem-summary)
+- [Member](#member)
 
 ## Objective
 The objective of this homework is to implement optimization algorithms for the 
@@ -750,3 +751,10 @@ Based on the results we can plot the convergence graph:
 ![output8](images/output8.png)
 
 From these runs CEM reached a point very close to the global minimum within 11 iterations. The elite fitness dropped from roughly `4.16` with the mean `μ` about `1.6` units away from the origin to a best fitness of `3.1e-4` with `‖μ‖ ≈ 1.4e-3`. The left panel shows a near-linear decrease of the best fitness on the log scale, while the right panel tracks the mean marching toward `(0, 0)` with small stochastic oscillations. In short, CEM avoided the local minima that trapped the Newton variants and navigated to the basin containing the global optimum.
+
+
+## Member
+- ศิวรุตม์ จุลพรหม, 67340800002 
+- พัฒนรัตน์ จีดจีน, 68430700410
+- พีรดนย์ เรืองแก้ว, 67340700403
+
